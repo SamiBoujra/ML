@@ -1,4 +1,5 @@
 GAN - MNIST Dataset
+
 Ce projet implémente un Generative Adversarial Network (GAN) pour générer des images de chiffres manuscrits en utilisant le dataset MNIST. Le code est écrit en PyTorch et présente une architecture de base de GAN composée de deux réseaux neuronaux : un Générateur et un Discriminateur.
 
 À quoi ça sert ?
