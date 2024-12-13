@@ -1,83 +1,119 @@
+# BoostedHybrid Model for Store Sales Time Series Forecasting
 
-Store Sales Time-Series Forecasting
+## Overview
+This repository contains a Python implementation of a hybrid machine learning model for time series forecasting using data from the Kaggle competition "Store Sales Time Series Forecasting." The goal of the competition is to predict sales for thousands of items across multiple stores, leveraging historical data, promotions, and other features.
 
-Overview
+The model combines a **Linear Regression** model for baseline predictions and an **XGBoost Regressor** for modeling residuals, creating a robust hybrid approach to time series forecasting.
 
-This repository contains an implementation of a hybrid machine learning model for time-series forecasting, developed for the "Store Sales Time-Series Forecasting" competition on Kaggle. The goal of this competition is to predict unit sales for thousands of items sold at different stores of Corporación Favorita, a large Ecuadorian-based grocery retailer. Accurate predictions can help minimize overstocking, reduce food waste, and improve customer satisfaction.
+---
 
-Competition Description
+## Files
 
-Forecasting sales is a vital task for brick-and-mortar grocery stores. Predicting too much inventory can lead to spoilage, while under-predicting leads to stockouts and lost revenue. Traditional forecasting methods often rely on subjective estimations, which are difficult to automate. With machine learning, it is possible to make forecasts that are more accurate and adaptable to complex scenarios.
+- `store_sales.py`: The main script containing the implementation of the BoostedHybrid model and data preprocessing steps.
+- `submission.csv`: The output file containing predictions for the competition.
 
-In this competition, participants forecast unit sales based on historical data and additional features such as promotions. The evaluation metric is the Root Mean Squared Logarithmic Error (RMSLE), which is calculated as follows:
+---
+
+## Key Features
+- **BoostedHybrid Model**: Combines two machine learning models:
+  - Linear Regression for baseline trend and seasonality.
+  - XGBoost Regressor to capture complex residual patterns.
+- **Deterministic Process Features**: Incorporates Fourier terms, seasonal indicators, and other deterministic features.
+- **Custom Data Preprocessing**: Handles categorical encoding, feature engineering, and multilevel time series data.
+
+---
+
+## Requirements
+
+### Python Libraries
+- `pandas`
+- `matplotlib`
+- `scikit-learn`
+- `statsmodels`
+- `xgboost`
+
+Install the required libraries using:
+```bash
+pip install pandas matplotlib scikit-learn statsmodels xgboost
+```
+
+---
+
+## Data
+The competition dataset includes:
+- Historical sales data for multiple stores and product families.
+- Features such as promotions and date information.
+
+The script preprocesses and structures the data into a multilevel time series format to train and test the hybrid model.
+
+---
+
+## Competition Details
+
+### Goal
+To forecast sales for thousands of items sold at different stores, improving accuracy compared to traditional methods.
+
+### Evaluation Metric
+The competition uses **Root Mean Squared Logarithmic Error (RMSLE)** as the evaluation metric:
+
+\[
+RMSLE = \sqrt{\frac{1}{n} \sum_{i=1}^n \left( \log(1 + \hat{y}_i) - \log(1 + y_i) \right)^2 }
+\]
 
 Where:
+- \( \hat{y}_i \): Predicted value
+- \( y_i \): Actual value
+- \( n \): Number of instances
 
- is the number of instances.
+### Submission Format
+Predictions are saved in a CSV file with the following format:
 
- is the predicted value.
+```
+id,sales
+3000888,0.0
+3000889,0.0
+...
+```
 
- is the actual value.
+---
 
- is the natural logarithm.
+## How to Run the Code
 
+### 1. Prepare the Environment
+Ensure you have the required Python libraries installed and the competition dataset downloaded to the `../input/store-sales-time-series-forecasting` directory.
 
-Implementation Details
+### 2. Train the Model
+Run the script `store_sales.py` to train the hybrid model on the 2017 sales data and generate predictions for the test set.
 
-The hybrid model combines two approaches:
+```bash
+python store_sales.py
+```
 
-Linear Regression (Model 1): Captures long-term trends and seasonal patterns using deterministic processes.
+### 3. Submit Predictions
+Upload the generated `submission.csv` file to the Kaggle competition for evaluation.
 
-XGBoost Regressor (Model 2): Models the residuals from the linear regression to capture complex patterns and short-term fluctuations.
+---
 
-Steps:
+## Results Visualization
+The script includes a visualization step to compare actual and fitted sales for a specific store and product family. Example:
 
-Data Loading:
+![Sales Plot](example_plot.png)
 
-Historical sales data is loaded and indexed by store, family, and date.
+---
 
-Data preprocessing ensures correct data types and structure.
+## Potential Impact
+Accurate forecasting can:
+- Reduce food waste by optimizing inventory management.
+- Improve customer satisfaction by ensuring stock availability.
+- Assist retailers in making data-driven decisions.
 
-Feature Engineering:
+---
 
-A deterministic process (DP) is used to create calendar-based features.
+## References
+- [Kaggle Competition: Store Sales Time Series Forecasting](https://www.kaggle.com/competitions/store-sales-time-series-forecasting)
+- Kaggle's Time Series Forecasting Course
 
-Fourier terms are added for seasonal components.
+---
 
-Additional features such as promotions are included.
-
-Model Training:
-
-Model 1 (Linear Regression) fits the main trend and seasonal components.
-
-Residuals from Model 1 are calculated and used to train Model 2 (XGBoost).
-
-Prediction:
-
-Model 1 predicts the main trend.
-
-Model 2 predicts the residuals, which are added to the trend prediction for final outputs.
-
-Evaluation:
-
-Results are plotted to visualize predictions against actual sales.
-
-The RMSLE metric is used to evaluate model performance.
-
-Submission:
-
-Predictions for the test set are generated and saved to a CSV file for submission.
-
-Key Libraries
-
-pandas: Data manipulation and preprocessing
-
-pathlib: Path handling
-
-scikit-learn: Linear regression and label encoding
-
-statsmodels: Deterministic processes and Fourier features
-
-xgboost: Gradient boosting for residual modeling
-
-matplotlib: Visualization of results
+## Author
+This project is developed by a Kaggle participant aiming to improve time series forecasting accuracy through innovative hybrid modeling approaches.
